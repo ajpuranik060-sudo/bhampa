@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IGCSE Mathematics – Wolsey Hall Oxford</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#1a56a0;--blue-light:#e8f0fb;--blue-mid:#b5d0f5;
+  --green:#2d7a4f;--green-light:#e6f4ec;
+  --amber:#b45a00;--amber-light:#fef3e2;
+  --coral:#c03a1e;--coral-light:#fdeee9;
+  --purple:#5040b0;--purple-light:#eeecfe;
+  --teal:#0e7490;--teal-light:#e0f2f7;
+  --orange:#b45309;--orange-light:#fff7ed;
+  --bg:#f6f7fb;--surface:#fff;--border:#e2e6ef;
+  --text:#1a1d2e;--text-mid:#4a5068;--text-muted:#8892a4;
+  --sw:265px;--r:10px;--rs:6px
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+.topbar{height:52px;background:var(--blue);display:flex;align-items:center;padding:0 1.5rem;gap:1rem;flex-shrink:0;position:sticky;top:0;z-index:100}
+.topbar-logo{font-family:'DM Serif Display',serif;color:#fff;font-size:17px}
+.topbar-logo span{opacity:.65;font-family:'DM Sans',sans-serif;font-size:13px;margin-left:10px;font-weight:400}
+.topbar-badge{margin-left:auto;background:rgba(255,255,255,.15);color:#fff;font-size:11px;padding:3px 10px;border-radius:20px;letter-spacing:.04em}
+.layout{display:flex;flex:1;height:calc(100vh - 52px);overflow:hidden}
+.sidebar{width:var(--sw);min-width:var(--sw);background:var(--surface);border-right:1px solid var(--border);overflow-y:auto}
+.sidebar-top{padding:1rem;border-bottom:1px solid var(--border)}
+.sidebar-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:3px}
+.sidebar-title{font-size:13px;font-weight:600}
+.module-heading{padding:8px 1rem;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);font-weight:700;background:var(--bg);border-bottom:1px solid var(--border);border-top:1px solid var(--border)}
+.topic-group{border-bottom:1px solid var(--border)}
+.topic-header{display:flex;align-items:center;gap:8px;padding:10px 1rem;cursor:pointer;font-size:12px;font-weight:600;color:var(--text-mid);text-transform:uppercase;letter-spacing:.05em;user-select:none}
+.topic-header:hover{background:var(--bg)}
+.topic-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;color:#fff}
+.t1{background:var(--blue)}.t2{background:var(--purple)}.t3{background:var(--green)}.t4{background:var(--teal)}.t5{background:var(--orange)}
+.chevron{margin-left:auto;transition:transform .2s;font-style:normal}
+.topic-header.open .chevron{transform:rotate(90deg)}
+.session-list{display:none}
+.session-list.open{display:block}
+.nav-item{display:flex;align-items:center;gap:8px;padding:7px 1rem 7px 2.25rem;cursor:pointer;font-size:13px;color:var(--text-mid);border-left:3px solid transparent;transition:background .12s}
+.nav-item:hover{background:var(--bg);color:var(--text)}
+.nav-item.active{background:var(--blue-light);color:var(--blue);border-left-color:var(--blue);font-weight:500}
+.nav-item .sc{font-size:10px;color:var(--text-muted);background:var(--bg);border-radius:4px;padding:1px 5px;flex-shrink:0}
+.nav-item.active .sc{background:var(--blue-mid);color:var(--blue)}
+.nav-item.top-link{padding-left:1rem;font-weight:500}
+.main{flex:1;overflow-y:auto}
+.content-inner{max-width:780px;margin:0 auto;padding:2rem 2rem 4rem}
+.page{display:none}
+.page.active{display:block}
+.bc{font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:5px;margin-bottom:1.25rem;flex-wrap:wrap}
+.bc a{color:var(--blue);text-decoration:none;cursor:pointer}
+.bc a:hover{text-decoration:underline}
+.page-header{margin-bottom:1.75rem}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:6px}
+.page-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);line-height:1.2;margin-bottom:4px}
+.page-meta{font-size:13px;color:var(--text-muted)}
+.key-areas{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1.5rem}
+.key-areas-title{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);margin-bottom:.6rem;font-weight:600}
+.key-areas ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.key-areas ul li{font-size:13.5px;color:var(--text-mid);display:flex;align-items:center;gap:9px}
+.key-areas ul li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0}
+.starter{border-radius:var(--r);padding:1rem 1.25rem;display:flex;gap:12px;align-items:flex-start;margin-bottom:1.5rem;background:var(--blue-light);border:1px solid var(--blue-mid)}
+.starter-icon{font-size:20px;flex-shrink:0}
+.starter-label{font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;margin-bottom:4px;color:var(--blue)}
+.starter-text{font-size:13px;color:var(--text-mid);line-height:1.6;margin-bottom:6px}
+.starter a{text-decoration:none;font-size:13px;font-weight:500;color:var(--blue)}
+.starter a:hover{text-decoration:underline}
+.sl{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);font-weight:600;margin:1.75rem 0 .75rem;display:flex;align-items:center;gap:8px}
+.sl::after{content:'';flex:1;height:1px;background:var(--border)}
+.rc{display:flex;align-items:center;gap:12px;padding:11px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);margin-bottom:8px;text-decoration:none;transition:border-color .15s,box-shadow .15s;cursor:pointer}
+.rc:hover{border-color:var(--blue-mid);box-shadow:0 2px 8px rgba(26,86,160,.08)}
+.ri{width:36px;height:36px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.ri.watch{background:var(--coral-light)}.ri.explore{background:var(--green-light)}.ri.complete{background:var(--amber-light)}.ri.read{background:var(--blue-light)}.ri.quiz{background:var(--purple-light)}
+.rb{flex:1;min-width:0}
+.rt{font-size:10px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:2px}
+.rt.watch{color:var(--coral)}.rt.explore{color:var(--green)}.rt.complete{color:var(--amber)}.rt.read{color:var(--blue)}.rt.quiz{color:var(--purple)}
+.rtitle{font-size:13.5px;color:var(--text);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rsrc{font-size:11px;color:var(--text-muted);margin-top:1px}
+.ra{font-size:14px;color:var(--text-muted);flex-shrink:0}
+.ib{background:var(--surface);border-left:3px solid var(--blue);border-top:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);border-radius:0 var(--r) var(--r) 0;padding:1rem 1.25rem;margin-bottom:8px}
+.ib p{font-size:13.5px;color:var(--text-mid);line-height:1.75}
+.ib p+p{margin-top:8px}
+.ib a{color:var(--blue);text-decoration:none}
+.ib a:hover{text-decoration:underline}
+.note{background:var(--amber-light);border:1px solid #f5c870;border-radius:var(--r);padding:.8rem 1rem;font-size:13px;color:var(--amber);margin-bottom:1rem;line-height:1.6}
+.callout{border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1rem;border:1px solid}
+.callout.quiz{background:var(--purple-light);border-color:#c5bdf5}
+.callout.assignment{background:var(--amber-light);border-color:#f5c870}
+.callout-title{font-size:11px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;margin-bottom:5px}
+.callout.quiz .callout-title{color:var(--purple)}
+.callout.assignment .callout-title{color:var(--amber)}
+.callout p{font-size:13.5px;color:var(--text-mid);line-height:1.7}
+.callout a{font-weight:600;text-decoration:none}
+.callout.quiz a{color:var(--purple)}
+.callout.assignment a{color:var(--amber)}
+.callout a:hover{text-decoration:underline}
+.session-grid{display:flex;flex-direction:column;gap:8px}
+.sr{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.sr:hover{border-color:var(--blue-mid);box-shadow:0 2px 8px rgba(26,86,160,.08)}
+.sn{font-size:11px;font-weight:700;padding:3px 8px;border-radius:var(--rs);flex-shrink:0}
+.sn.t1{background:var(--blue-light);color:var(--blue)}.sn.t2{background:var(--purple-light);color:var(--purple)}.sn.t3{background:var(--green-light);color:var(--green)}.sn.t4{background:var(--teal-light);color:var(--teal)}.sn.t5{background:var(--orange-light);color:var(--orange)}
+.sr-title{font-size:14px;color:var(--text);flex:1}
+.topic-cards{display:flex;flex-direction:column;gap:1rem;margin-top:1rem}
+.tc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.tc:hover{box-shadow:0 3px 12px rgba(0,0,0,.07)}
+.tc-h{padding:1rem 1.25rem;display:flex;align-items:center;gap:12px}
+.tc-icon{width:40px;height:40px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.tc-icon.t1{background:var(--blue-light)}.tc-icon.t2{background:var(--purple-light)}.tc-icon.t3{background:var(--green-light)}.tc-icon.t4{background:var(--teal-light)}.tc-icon.t5{background:var(--orange-light)}
+.tc-info{flex:1}
+.tc-num{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:2px}
+.tc-title{font-size:15px;font-weight:600}
+.tc-meta{font-size:12px;color:var(--text-muted);margin-top:2px}
+.tc-btn{padding:6px 14px;border-radius:var(--rs);font-size:12px;font-weight:600;cursor:pointer;border:none;color:#fff}
+.tc-btn.t1{background:var(--blue)}.tc-btn.t2{background:var(--purple)}.tc-btn.t3{background:var(--green)}.tc-btn.t4{background:var(--teal)}.tc-btn.t5{background:var(--orange)}
+.tc-btn:hover{opacity:.85}
+.hero{background:linear-gradient(135deg,#1a56a0 0%,#2d3a8c 100%);border-radius:var(--r);padding:2rem;margin-bottom:1.75rem;color:#fff}
+.hero-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;opacity:.7;margin-bottom:6px}
+.hero-title{font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:6px}
+.hero-sub{font-size:14px;opacity:.8;line-height:1.6}
+.hero-stats{display:flex;gap:2rem;margin-top:1.25rem}
+.hero-stat-val{font-size:24px;font-weight:600}
+.hero-stat-label{font-size:11px;opacity:.65}
+.module-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem}
+.module-card-title{font-size:16px;font-weight:600;margin-bottom:4px}
+.module-card-desc{font-size:13px;color:var(--text-mid);line-height:1.6;margin-bottom:1rem}
+.module-card-btn{display:inline-block;padding:7px 16px;border-radius:var(--rs);font-size:13px;font-weight:600;cursor:pointer;border:none;color:#fff;background:var(--blue);text-decoration:none}
+.module-card-btn:hover{opacity:.85}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-logo">Wolsey Hall Oxford <span>IGCSE Mathematics</span></div>
+  <div class="topbar-badge">Year 1</div>
+</div>
+<div class="layout">
+<nav class="sidebar">
+  <div class="sidebar-top">
+    <div class="sidebar-label">Course</div>
+    <div class="sidebar-title">IGCSE Mathematics</div>
+  </div>
+  <div class="nav-item top-link active" onclick="showPage('home',this)">📚 Course overview</div>
+
+  <div class="module-heading">Module 1</div>
+  <div class="topic-group">
+    <div class="topic-header" onclick="toggleTopic(this)"><div class="topic-dot t1">1.1</div>Number<i class="chevron">▶</i></div>
+    <div class="session-list">
+      <div class="nav-item" onclick="showPage('t11',this)"><span class="sc">OVW</span>Topic overview</div>
+      <div class="nav-item" onclick="showPage('s111',this)"><span class="sc">1.1.1</span>Types of numbers</div>
+      <div class="nav-item" onclick="showPage('s112',this)"><span class="sc">1.1.2</span>Multiples &amp; factors</div>
+      <div class="nav-item" onclick="showPage('s113',this)"><span class="sc">1.1.3</span>Prime numbers</div>
+      <div class="nav-item" onclick="showPage('s114',this)"><span class="sc">1.1.4</span>HCF &amp; LCM</div>
+      <div class="nav-item" onclick="showPage('s115',this)"><span class="sc">1.1.5</span>Directed numbers</div>
+    </div>
+  </div>
+  <div class="topic-group">
+    <div class="topic-header" onclick="toggleTopic(this)"><div class="topic-dot t2">1.2</div>Algebra<i class="chevron">▶</i></div>
+    <div class="session-list">
+      <div class="nav-item" onclick="showPage('t12',this)"><span class="sc">OVW</span>Topic overview</div>
+      <div class="nav-item" onclick="showPage('s121',this)"><span class="sc">1.2.1</span>Getting started</div>
+      <div class="nav-item" onclick="showPage('s122',this)"><span class="sc">1.2.2</span>Writing expressions</div>
+      <div class="nav-item" onclick="showPage('s123',this)"><span class="sc">1.2.3</span>Substitution</div>
+      <div class="nav-item" onclick="showPage('s124',this)"><span class="sc">1.2.4</span>Simplifying: Part I</div>
+      <div class="nav-item" onclick="showPage('s125',this)"><span class="sc">1.2.5</span>Simplifying: Part II</div>
+    </div>
+  </div>
+  <div class="topic-group">
+    <div class="topic-header" onclick="toggleTopic(this)"><div class="topic-dot t3">1.3</div>Shape<i class="chevron">▶</i></div>
+    <div class="session-list">
+      <div class="nav-item" onclick="showPage('t13',this)"><span class="sc">OVW</span>Topic overview</div>
+      <div class="nav-item" onclick="showPage('s131',this)"><span class="sc">1.3.1</span>Measuring angles</div>
+      <div class="nav-item" onclick="showPage('s132',this)"><span class="sc">1.3.2</span>Angle relationships</div>
+      <div class="nav-item" onclick="showPage('s133',this)"><span class="sc">1.3.3</span>Triangles</div>
+      <div class="nav-item" onclick="showPage('s134',this)"><span class="sc">1.3.4</span>Quadrilaterals</div>
+      <div class="nav-item" onclick="showPage('s135',this)"><span class="sc">1.3.5</span>Polygons</div>
+    </div>
+  </div>
+  <div class="topic-group">
+    <div class="topic-header" onclick="toggleTopic(this)"><div class="topic-dot t4">1.4</div>Data<i class="chevron">▶</i></div>
+    <div class="session-list">
+      <div class="nav-item" onclick="showPage('t14',this)"><span class="sc">OVW</span>Topic overview</div>
+      <div class="nav-item" onclick="showPage('s141',this)"><span class="sc">1.4.1</span>Getting started</div>
+      <div class="nav-item" onclick="showPage('s142',this)"><span class="sc">1.4.2</span>Collecting &amp; classifying</div>
+      <div class="nav-item" onclick="showPage('s143',this)"><span class="sc">1.4.3</span>Frequency tables &amp; stem-leaf</div>
+      <div class="nav-item" onclick="showPage('s144',this)"><span class="sc">1.4.4</span>Stem-leaf &amp; two-way tables</div>
+    </div>
+  </div>
+
+  <div class="module-heading">Module 2</div>
+  <div class="topic-group">
+    <div class="topic-header" onclick="toggleTopic(this)"><div class="topic-dot t1">2.1</div>Number<i class="chevron">▶</i></div>
+    <div class="session-list">
+      <div class="nav-item" onclick="showPage('t21',this)"><span class="sc">OVW</span>Topic overview</div>
+      <div class="nav-item" onclick="showPage('s211',this)"><span class="sc">2.1.1</span>Powers and roots</div>
+      <div class="nav-item" onclick="showPage('s212',this)"><span class="sc">2.1.2</span>Laws of indices</div>
+      <div class="nav-item" onclick="showPage('s213',this)"><span class="sc">2.1.3</span>Order of operations</div>
+      <div class="nav-item" onclick="showPage('s214',this)"><span class="sc">2.1.4</span>Rounding &amp; estimating</div>
+      <div class="nav-item" onclick="showPage('s215',this)"><span class="sc">2.1.5</span>Practice questions</div>
+    </div>
+  </div>
+  <div class="topic-group">
+    <div class="topic-header" onclick="toggleTopic(this)"><div class="topic-dot t2">2.2</div>Algebra<i class="chevron">▶</i></div>
+    <div class="session-list">
+      <div class="nav-item" onclick="showPage('t22',this)"><span class="sc">OVW</span>Topic overview</div>
+    </div>
+  </div>
+  <div class="topic-group">
+    <div class="topic-header" onclick="toggleTopic(this)"><div class="topic-dot t3">2.3</div>Shape<i class="chevron">▶</i></div>
+    <div class="session-list">
+      <div class="nav-item" onclick="showPage('t23',this)"><span class="sc">OVW</span>Topic overview</div>
+    </div>
+  </div>
+  <div class="topic-group">
+    <div class="topic-header" onclick="toggleTopic(this)"><div class="topic-dot t4">2.4</div>Data<i class="chevron">▶</i></div>
+    <div class="session-list">
+      <div class="nav-item" onclick="showPage('t24',this)"><span class="sc">OVW</span>Topic overview</div>
+    </div>
+  </div>
+</nav>
+
+<main class="main">
+<div class="content-inner">
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-label">Wolsey Hall Oxford · IGCSE Mathematics</div>
+    <div class="hero-title">Course Overview</div>
+    <div class="hero-sub">Work through each module, topic and session in order, completing tutorials, coursebook exercises, and practice activities.</div>
+    <div class="hero-stats">
+      <div><div class="hero-stat-val">2</div><div class="hero-stat-label">Modules</div></div>
+      <div><div class="hero-stat-val">8</div><div class="hero-stat-label">Topics</div></div>
+      <div><div class="hero-stat-val">23+</div><div class="hero-stat-label">Sessions</div></div>
+    </div>
+  </div>
+  <div class="module-card">
+    <div class="module-card-title">📘 Module 1</div>
+    <div class="module-card-desc">Covers Number (types, HCF, LCM, directed numbers), Algebra (expressions, substitution, simplifying), Shape (angles, triangles, quadrilaterals, polygons), and Data (collecting, classifying, frequency tables).</div>
+    <button class="module-card-btn" onclick="showPage('t11',null)">Start Module 1 →</button>
+  </div>
+  <div class="module-card">
+    <div class="module-card-title">📗 Module 2</div>
+    <div class="module-card-desc">Introduces exponents, estimating, circles, constructions, and data display. Topics cover Number, Algebra, Shape, and Data.</div>
+    <button class="module-card-btn" onclick="showPage('t21',null)">Start Module 2 →</button>
+  </div>
+</div>
+
+<!-- ===== MODULE 1 ===== -->
+
+<!-- T1.1 -->
+<div class="page" id="page-t11">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › Module 1 › Topic 1.1</div>
+  <div class="page-header"><div class="eyebrow">Topic 1.1</div><div class="page-title">Number</div><div class="page-meta">5 sessions</div></div>
+  <p style="font-size:14px;color:var(--text-mid);line-height:1.75;margin-bottom:1.25rem">The first topic focuses on types of numbers, including HCF, LCM, prime factorisation and directed numbers.</p>
+  <div class="key-areas"><div class="key-areas-title">Key areas</div><ul><li>Even and odd numbers</li><li>Finding HCF and LCM and prime factorisation</li><li>Working with negative numbers</li></ul></div>
+  <div class="starter"><div class="starter-icon">▶️</div><div><div class="starter-label">Starter</div><div class="starter-text">Watch this short video to introduce you to a world without numbers:</div><a href="https://www.clickview.net/gb/primary/videos/88267806" target="_blank">WATCH – Life without numbers (ClickView) ↗</a></div></div>
+  <div class="sl">Sessions</div>
+  <div class="session-grid">
+    <div class="sr" onclick="showPage('s111',null)"><span class="sn t1">1.1.1</span><span class="sr-title">Different types of numbers</span>›</div>
+    <div class="sr" onclick="showPage('s112',null)"><span class="sn t1">1.1.2</span><span class="sr-title">Multiples and factors</span>›</div>
+    <div class="sr" onclick="showPage('s113',null)"><span class="sn t1">1.1.3</span><span class="sr-title">Prime numbers</span>›</div>
+    <div class="sr" onclick="showPage('s114',null)"><span class="sn t1">1.1.4</span><span class="sr-title">HCF, LCM</span>›</div>
+    <div class="sr" onclick="showPage('s115',null)"><span class="sn t1">1.1.5</span><span class="sr-title">Directed numbers</span>›</div>
+  </div>
+</div>
+
+<!-- S1.1.1 -->
+<div class="page" id="page-s111">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t11',null)">Topic 1.1</a> › 1.1.1</div>
+  <div class="page-header"><div class="eyebrow">Session 1.1.1</div><div class="page-title">Different types of numbers</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://www.youtube.com/watch?v=JXgduTLVjdg" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Types of Numbers</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 1–5 in your coursebook. Make notes on any new concepts and answer as many questions as you need to. Note the key words on page 2.</p><p>Extended content is identified by a grey arrow and bar on the left. All answers can be found in your digital version or in <a href="https://wolseyhalloxford.instructure.com/courses/2069945/pages/general-resources" target="_blank">General Resources</a>.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/40-lesson/place-value-tens-and-ones" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Place value tens and ones</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://www.clickview.net/gb/primary/videos/88267804" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">The discovery of Zero</div><div class="rsrc">ClickView</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/6824-game/tug-of-war-order-of-operations-with-directed-numbers" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Tug of war</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- S1.1.2 -->
+<div class="page" id="page-s112">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t11',null)">Topic 1.1</a> › 1.1.2</div>
+  <div class="page-header"><div class="eyebrow">Session 1.1.2</div><div class="page-title">Multiples and factors</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://youtu.be/PrSf78pnTyE" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">How to find Multiples and Factors</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 6–9 in your coursebook.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/44-lesson/odds-evens-multiples" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Odds evens multiples</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://nrich.maths.org/5468" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Factors and Multiples</div><div class="rsrc">NRICH</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- S1.1.3 -->
+<div class="page" id="page-s113">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t11',null)">Topic 1.1</a> › 1.1.3</div>
+  <div class="page-header"><div class="eyebrow">Session 1.1.3</div><div class="page-title">Prime numbers</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://youtu.be/GjzKpryaTYk" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">What are Prime Numbers and Composite Numbers?</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 9–12 in your coursebook.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/6083-game/prime-factorisation-pairs-activity" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Prime factorisation</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://www.youtube.com/watch?v=91azbInN7Lk" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Writing a Number as the Product of its Prime Factors</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- S1.1.4 -->
+<div class="page" id="page-s114">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t11',null)">Topic 1.1</a> › 1.1.4</div>
+  <div class="page-header"><div class="eyebrow">Session 1.1.4</div><div class="page-title">HCF, LCM</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://youtu.be/RMJs_I9Nydw" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">How to find the Lowest Common Multiple (LCM)</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://youtu.be/1F9CTS3aH9c" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">How to find the Highest Common Factor</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 13–14 in your coursebook.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/6083-game/prime-factorisation-pairs-activity" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Prime factorisation pairs</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://www.youtube.com/watch?v=PQF-HL0IfHc" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">HCF and LCM using Venn Diagrams</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://www.virtualnerd.com/pre-algebra/factors-fractions-exponents/prime-factorization-greatest-common-factor/greatest-common-factor/greatest-common-factor-three-numbers" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Greatest Common Factor of Three Numbers</div><div class="rsrc">Virtual Nerd</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- S1.1.5 -->
+<div class="page" id="page-s115">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t11',null)">Topic 1.1</a> › 1.1.5</div>
+  <div class="page-header"><div class="eyebrow">Session 1.1.5</div><div class="page-title">Directed numbers</div></div>
+  <div class="note">💡 Spend sufficient time practising negative numbers — they form a foundation for future work.</div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://www.youtube.com/watch?v=DBSviXhkubg" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">A Trick for Adding and Subtracting Negative Numbers</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://www.youtube.com/watch?v=UZ1J8Pzt4_I" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Rules of Positive and Negative Signs in Math</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://corbettmaths.com/2013/06/08/negatives-addition-and-subtraction-2/" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Negatives: Addition and Subtraction</div><div class="rsrc">Corbettmaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://www.youtube.com/watch?v=RR0fROLPCQ4" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Order a mixture of positive and negative numbers</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://www.youtube.com/watch?v=pDjBuX8qgy0" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Adding and Subtracting Negative Numbers</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://www.youtube.com/watch?v=S-UEdTAe1-w" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Multiplying and Dividing Negative Numbers</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 14–17 in your coursebook.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/48-lesson/negative-numbers-2" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Negative Numbers 2</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/6234-game/negative-number-calculations-beat-the-clock" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Negative number calculations</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://www.clickview.net/gb/primary/videos/88267687/india-and-negative-numbers" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">India and Negative Numbers</div><div class="rsrc">ClickView</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://www.cimt.org.uk/projects/mepres/book7/bk7i3/bk7_3i3.htm" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Negative Numbers</div><div class="rsrc">CIMT</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://www.cimt.org.uk/projects/mepres/book7/bk7i15/bk7_15i1.htm" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Adding and Subtracting Directed Numbers</div><div class="rsrc">CIMT</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://www.cimt.org.uk/projects/mepres/book7/bk7i15/bk7_15i2.htm" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Multiplying and Dividing Directed Numbers</div><div class="rsrc">CIMT</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- T1.2 -->
+<div class="page" id="page-t12">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › Module 1 › Topic 1.2</div>
+  <div class="page-header"><div class="eyebrow">Topic 1.2</div><div class="page-title">Algebra</div><div class="page-meta">5 sessions</div></div>
+  <p style="font-size:14px;color:var(--text-mid);line-height:1.75;margin-bottom:1.25rem">Focuses on basic algebraic manipulation and substitution for a variable.</p>
+  <div class="key-areas"><div class="key-areas-title">Key areas</div><ul><li>Substituting values for letters</li><li>Adding, multiplying terms</li><li>Simplifying expressions</li><li>Forming expressions</li></ul></div>
+  <div class="starter"><div class="starter-icon">🔍</div><div><div class="starter-label">Starter</div><a href="https://mathigon.org/timeline" target="_blank">EXPLORE – Timeline of Mathematics (Mathigon) ↗</a></div></div>
+  <div class="sl">Sessions</div>
+  <div class="session-grid">
+    <div class="sr" onclick="showPage('s121',null)"><span class="sn t2">1.2.1</span><span class="sr-title">Getting started with algebra</span>›</div>
+    <div class="sr" onclick="showPage('s122',null)"><span class="sn t2">1.2.2</span><span class="sr-title">Writing algebraic expressions</span>›</div>
+    <div class="sr" onclick="showPage('s123',null)"><span class="sn t2">1.2.3</span><span class="sr-title">Substitution</span>›</div>
+    <div class="sr" onclick="showPage('s124',null)"><span class="sn t2">1.2.4</span><span class="sr-title">Simplifying expressions: Part I</span>›</div>
+    <div class="sr" onclick="showPage('s125',null)"><span class="sn t2">1.2.5</span><span class="sr-title">Simplifying expressions: Part II</span>›</div>
+  </div>
+</div>
+
+<!-- S1.2.1 -->
+<div class="page" id="page-s121">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t12',null)">Topic 1.2</a> › 1.2.1</div>
+  <div class="page-header"><div class="eyebrow">Session 1.2.1</div><div class="page-title">Getting started with algebra</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://www.youtube.com/watch?v=NybHckSEQBI" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Algebra Basics: What Is Algebra?</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 39–41 in your coursebook. Take note of the key words on page 39.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/5786-lesson/introduction-to-algebra" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Introduction to algebra</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/6177-game/algebra-vocabulary-review" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Algebra vocabulary review</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="http://www.math.com/school/subject2/lessons/S2U1L1GL.html" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">The Language of Algebra</div><div class="rsrc">Math.com</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://www.clickview.net/gb/primary/videos/88267660" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">The Birthday Paradox</div><div class="rsrc">ClickView</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- S1.2.2 -->
+<div class="page" id="page-s122">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t12',null)">Topic 1.2</a> › 1.2.2</div>
+  <div class="page-header"><div class="eyebrow">Session 1.2.2</div><div class="page-title">Writing algebraic expressions</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://www.youtube.com/watch?v=MGXsJCzhWZQ" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Algebraic notation</div><div class="rsrc">Corbett Maths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://www.youtube.com/watch?v=NMTmHdQFKQ4" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Forming algebraic expressions</div><div class="rsrc">Corbett Maths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 41–43 in your coursebook.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/5781-lesson/algebraic-thinking" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Algebraic Thinking</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/203-lesson/order-of-operations" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Order of Operations</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://www.clickview.net/gb/primary/videos/88267690/the-arabic-science-of-balancing" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">The Arabic Science of Balancing</div><div class="rsrc">ClickView</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- S1.2.3 -->
+<div class="page" id="page-s123">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t12',null)">Topic 1.2</a> › 1.2.3</div>
+  <div class="page-header"><div class="eyebrow">Session 1.2.3</div><div class="page-title">Substitution</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://www.youtube.com/watch?v=XJmXvZdRRNQ" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Algebra Substitution – GCSE Maths</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 43–47 in your coursebook.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/204-lesson/substitution-1" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Substitution 1</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/205-lesson/substitution-2" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Substitution 2</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://www.clickview.net/gb/primary/videos/88267565" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Dating by Number</div><div class="rsrc">ClickView</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- S1.2.4 -->
+<div class="page" id="page-s124">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t12',null)">Topic 1.2</a> › 1.2.4</div>
+  <div class="page-header"><div class="eyebrow">Session 1.2.4</div><div class="page-title">Simplifying expressions: Part I</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://youtu.be/g9VIuFYB98g" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">How to Simplify Expressions by Collecting Like Terms</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 47–50 in your coursebook.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/169-lesson/simplifying-1" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Simplifying 1</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/6094-game/collecting-like-terms-pyramid-puzzle-2" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Collecting Like Terms</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://www.clickview.net/gb/primary/videos/88267565/variables-dating-by-number?tocId=resources" target="_blank"><div class="ri complete">📄</div><div class="rb"><div class="rt complete">Complete</div><div class="rtitle">Number Worksheets – Basic and Core</div><div class="rsrc">ClickView</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- S1.2.5 -->
+<div class="page" id="page-s125">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t12',null)">Topic 1.2</a> › 1.2.5</div>
+  <div class="page-header"><div class="eyebrow">Session 1.2.5</div><div class="page-title">Simplifying expressions: Part II</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://youtu.be/honqw6r8uQY" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">How to Simplify Algebraic Expressions</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://www.youtube.com/watch?v=wYK0X8XvJjE" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Multiplying Algebraic Fractions</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 51–53 in your coursebook. Make notes on any new concepts and answer as many questions as you need to.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/170-lesson/simplifying-2" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Simplifying 2</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/6095-game/multiplying-terms-question-generator" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Multiplying Terms</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="session_1_2_5_worksheet.pdf" download="Session_1.2.5_Worksheet.pdf"><div class="ri complete">📄</div><div class="rb"><div class="rt complete">Complete</div><div class="rtitle">Worksheet – Multiplying Algebraic Fractions (Corbettmaths)</div><div class="rsrc">PDF · Click to download</div></div><span class="ra">⬇</span></a>
+  <a class="rc" href="session_1_2_5_answers.pdf" download="Session_1.2.5_Answers.pdf"><div class="ri read">📖</div><div class="rb"><div class="rt read">Check</div><div class="rtitle">Worksheet Answers</div><div class="rsrc">PDF · Click to download</div></div><span class="ra">⬇</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://www.clickview.net/gb/primary/videos/88267565/variables-dating-by-number?tocId=resources" target="_blank"><div class="ri complete">📄</div><div class="rb"><div class="rt complete">Complete</div><div class="rtitle">Number Worksheets – Advanced</div><div class="rsrc">ClickView</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- T1.3 -->
+<div class="page" id="page-t13">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › Module 1 › Topic 1.3</div>
+  <div class="page-header"><div class="eyebrow">Topic 1.3</div><div class="page-title">Shape</div><div class="page-meta">5 sessions</div></div>
+  <p style="font-size:14px;color:var(--text-mid);line-height:1.75;margin-bottom:1.25rem">Focuses on 2D shapes and their properties.</p>
+  <div class="key-areas"><div class="key-areas-title">Key areas</div><ul><li>Lines and angles, correct terminology</li><li>Angle relationships</li><li>Angles in a triangle</li><li>Angles in quadrilaterals</li></ul></div>
+  <div class="starter"><div class="starter-icon">▶️</div><div><div class="starter-label">Starter</div><a href="https://www.clickview.net/gb/primary/videos/88267709" target="_blank">WATCH – Euclid (ClickView) ↗</a></div></div>
+  <div class="sl">Sessions</div>
+  <div class="session-grid">
+    <div class="sr" onclick="showPage('s131',null)"><span class="sn t3">1.3.1</span><span class="sr-title">Lines and angles – Measuring and drawing angles</span>›</div>
+    <div class="sr" onclick="showPage('s132',null)"><span class="sn t3">1.3.2</span><span class="sr-title">Lines and angles – Angle relationships</span>›</div>
+    <div class="sr" onclick="showPage('s133',null)"><span class="sn t3">1.3.3</span><span class="sr-title">Triangles</span>›</div>
+    <div class="sr" onclick="showPage('s134',null)"><span class="sn t3">1.3.4</span><span class="sr-title">Quadrilaterals</span>›</div>
+    <div class="sr" onclick="showPage('s135',null)"><span class="sn t3">1.3.5</span><span class="sr-title">Polygons</span>›</div>
+  </div>
+</div>
+
+<!-- S1.3.1 -->
+<div class="page" id="page-s131">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t13',null)">Topic 1.3</a> › 1.3.1</div>
+  <div class="page-header"><div class="eyebrow">Session 1.3.1</div><div class="page-title">Lines and angles – Measuring and drawing angles</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://corbettmaths.com/2013/03/05/measuring-angles/" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Measuring Angles</div><div class="rsrc">Corbettmaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://corbettmaths.com/2013/03/04/drawing-angles/" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Drawing Angles</div><div class="rsrc">Corbettmaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://corbettmaths.com/2012/08/10/types-of-angle/" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Types of Angle</div><div class="rsrc">Corbettmaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 71–79 in your coursebook. Make note of the key words on page 71.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/5775-lesson/angles-2" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Angles 2</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/254-lesson/measuring-angles" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Measuring Angles</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/262-game/angle-game" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Angle game</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/5792-lesson/angles-3" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Angles 3</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://www.clickview.net/gb/primary/videos/88267709/geometry-euclid?tocId=resources" target="_blank"><div class="ri complete">📄</div><div class="rb"><div class="rt complete">Complete</div><div class="rtitle">Geometry Worksheets – Basic</div><div class="rsrc">ClickView</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- S1.3.2 -->
+<div class="page" id="page-s132">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t13',null)">Topic 1.3</a> › 1.3.2</div>
+  <div class="page-header"><div class="eyebrow">Session 1.3.2</div><div class="page-title">Lines and angles – Angle relationships</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://corbettmaths.com/2013/12/19/angles-straight-line-video-35/" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Angles: Straight Line</div><div class="rsrc">Corbettmaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://www.youtube.com/watch?v=I5auyoXYoX0" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Alternate, Corresponding and Allied Angles – Parallel Lines</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 79–85 in your coursebook.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/256-lesson/angle-sums" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Angle Sums</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/258-lesson/angles-in-parallel-lines" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Angles in Parallel Lines</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/257-lesson/angle-reasoning" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Angle reasoning</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://app.mymaths.co.uk/6145-game/angles-multiple-choice-activity" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Angles Multiple-Choice Activity</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- S1.3.3 -->
+<div class="page" id="page-s133">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t13',null)">Topic 1.3</a> › 1.3.3</div>
+  <div class="page-header"><div class="eyebrow">Session 1.3.3</div><div class="page-title">Triangles</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://youtu.be/FD9DVFBpCMI" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">5 Angle Rules to Know</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://corbettmaths.com/2012/08/10/angles-in-a-triangle/" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Angles in a Triangle</div><div class="rsrc">Corbettmaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 86–91 in your coursebook.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/244-lesson/properties-of-triangles" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Properties of Triangles</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://app.mymaths.co.uk/6137-game/types-of-triangle-multiple-choice-activity" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Types of Triangle Multiple-Choice</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- S1.3.4 -->
+<div class="page" id="page-s134">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t13',null)">Topic 1.3</a> › 1.3.4</div>
+  <div class="page-header"><div class="eyebrow">Session 1.3.4</div><div class="page-title">Quadrilaterals</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://youtu.be/FD9DVFBpCMI" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">5 Angle Rules to Know</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://corbettmaths.com/2013/03/17/angles-in-quadrilaterals/" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Angles in Quadrilaterals</div><div class="rsrc">Corbettmaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 91–94 in your coursebook.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/259-lesson/interior-exterior-angles" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Interior Exterior Angles</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/6138-game/quadrilaterals-what-am-i" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Quadrilaterals – What am I?</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://www.youtube.com/watch?v=7CZNEu_wfsI" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Measuring Angles in Triangles and Quadrilaterals</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://cimt.org.uk/projects/mepres/book8/bk8i15/bk8_15i4.htm" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Quadrilaterals</div><div class="rsrc">CIMT</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- S1.3.5 -->
+<div class="page" id="page-s135">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t13',null)">Topic 1.3</a> › 1.3.5</div>
+  <div class="page-header"><div class="eyebrow">Session 1.3.5</div><div class="page-title">Polygons</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://corbettmaths.com/2012/08/10/angles-in-polygons/" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Angles in Polygons</div><div class="rsrc">Corbettmaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 95–97 in your coursebook.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/260-lesson/sum-of-angles-in-a-polygon" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Sum of Angles in a Polygon</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/261-lesson/angle-proofs" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Angle Proofs</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/6858-game/exterior-angles-of-regular-polygons-pairs-activity" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Exterior Angles of Regular Polygons</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/6859-game/interior-angles-of-regular-polygons-pairs-activity" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Interior Angles of Regular Polygons</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/6860-game/sum-of-interior-angles-pairs-activity" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Sum of Interior Angles</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://www.clickview.net/gb/primary/videos/88268049" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Bees and Their Hives</div><div class="rsrc">ClickView</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://mathigon.org/polypad#polygons" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Polygons</div><div class="rsrc">Mathigon</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- T1.4 -->
+<div class="page" id="page-t14">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › Module 1 › Topic 1.4</div>
+  <div class="page-header"><div class="eyebrow">Topic 1.4</div><div class="page-title">Data</div><div class="page-meta">4 sessions</div></div>
+  <p style="font-size:14px;color:var(--text-mid);line-height:1.75;margin-bottom:1.25rem">Introduction to statistics — collecting, classifying and organising data.</p>
+  <div class="key-areas"><div class="key-areas-title">Key areas</div><ul><li>Understanding different types of data</li><li>Collecting and classifying data</li><li>Organising data using frequency tables or stem and leaf diagrams</li></ul></div>
+  <div class="starter"><div class="starter-icon">▶️</div><div><div class="starter-label">Starter</div><a href="https://www.youtube.com/watch?v=wV0Ks7aS7YI" target="_blank">WATCH – Why You Need to Study Statistics (YouTube) ↗</a></div></div>
+  <div class="sl">Sessions</div>
+  <div class="session-grid">
+    <div class="sr" onclick="showPage('s141',null)"><span class="sn t4">1.4.1</span><span class="sr-title">Getting started</span>›</div>
+    <div class="sr" onclick="showPage('s142',null)"><span class="sn t4">1.4.2</span><span class="sr-title">Collecting and classifying data</span>›</div>
+    <div class="sr" onclick="showPage('s143',null)"><span class="sn t4">1.4.3</span><span class="sr-title">Organising data: frequency tables, stem and leaf diagrams</span>›</div>
+    <div class="sr" onclick="showPage('s144',null)"><span class="sn t4">1.4.4</span><span class="sr-title">Stem-and-leaf diagrams, two-way tables</span>›</div>
+  </div>
+</div>
+
+<!-- S1.4.1 -->
+<div class="page" id="page-s141">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t14',null)">Topic 1.4</a> › 1.4.1</div>
+  <div class="page-header"><div class="eyebrow">Session 1.4.1</div><div class="page-title">Getting started</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://www.youtube.com/watch?v=xo9CWq0UhcE" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Read a frequency from a polygon</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://corbettmaths.com/2013/04/15/drawing-bar-charts/" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Drawing Bar Charts</div><div class="rsrc">Corbettmaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 107–109 in your coursebook. Make note of the key words on page 108.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/6364-game/misleading-graphs-multiple-choice-activity" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Misleading Graphs Multiple-Choice Activity</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://www.clickview.net/gb/primary/videos/88268173/most-popular-pet" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Most Popular Pet</div><div class="rsrc">ClickView</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- S1.4.2 -->
+<div class="page" id="page-s142">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t14',null)">Topic 1.4</a> › 1.4.2</div>
+  <div class="page-header"><div class="eyebrow">Session 1.4.2</div><div class="page-title">Collecting and classifying data</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://corbettmaths.com/2013/05/12/discrete-and-continuous-data-corbettmaths/" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Discrete and Continuous Data</div><div class="rsrc">Corbettmaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 110–112 in your coursebook.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/343-lesson/types-of-data" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Types of Data</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/344-lesson/sampling" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Sampling</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://www.clickview.net/gb/primary/videos/88268247" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Can you trust your IQ?</div><div class="rsrc">ClickView</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- S1.4.3 -->
+<div class="page" id="page-s143">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t14',null)">Topic 1.4</a> › 1.4.3</div>
+  <div class="page-header"><div class="eyebrow">Session 1.4.3</div><div class="page-title">Organising data: frequency tables &amp; stem-and-leaf diagrams</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://youtu.be/pT-GIc6siag" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Tally Charts Answers</div><div class="rsrc">Corbettmaths / YouTube</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://www.youtube.com/watch?v=Kf3tsCFWIGA" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Form a frequency table from discrete data</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://www.youtube.com/watch?v=h77zAyvojt4" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Stem and Leaf Diagrams – GCSE Maths</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 113–117 in your coursebook.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/357-lesson/grouping-data" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Grouping Data</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://www.clickview.net/gb/primary/videos/88268264" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Mind Control</div><div class="rsrc">ClickView</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- S1.4.4 -->
+<div class="page" id="page-s144">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t14',null)">Topic 1.4</a> › 1.4.4</div>
+  <div class="page-header"><div class="eyebrow">Session 1.4.4</div><div class="page-title">Stem-and-leaf diagrams &amp; two-way tables</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://www.youtube.com/watch?v=h77zAyvojt4" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Stem and Leaf Diagrams – GCSE Maths</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://www.youtube.com/watch?v=U785Y-QI-K8" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Two Way Tables</div><div class="rsrc">Corbettmaths / YouTube</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 118–125 in your coursebook.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/356-lesson/two-way-tables" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Two-Way Tables</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/353-lesson/line-graphs-and-two-way-tables" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Line graphs and Two-Way Tables</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/474-lesson/two-way-tables" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Two-Way Tables (2)</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/473-lesson/frequency-tables" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Frequency Tables</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://mathigon.org/applications" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Applications of Mathematics</div><div class="rsrc">Mathigon</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://corbettmaths.com/5-a-day/gcse/" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">5 a Day revision</div><div class="rsrc">CorbettMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Assessment</div>
+  <div class="callout quiz"><div class="callout-title">🧠 Quiz</div><p>Check your understanding by taking the <a href="https://wolseyhalloxford.instructure.com/courses/2069945/assignments/11735179" target="_blank">multiple-choice quiz ↗</a>. You can do it as many times as you like. Use it as an opportunity to test yourself!</p></div>
+  <div class="callout assignment"><div class="callout-title">📝 Assignment</div><p>When fully prepared, complete <a href="https://wolseyhalloxford.instructure.com/courses/2069945/assignments/11733231" target="_blank">Assignment One ↗</a>. The assignment is accessible once the whole module has been viewed and a minimum score of 75% achieved in the quiz.</p></div>
+</div>
+
+<!-- ===== MODULE 2 ===== -->
+
+<!-- T2.1 -->
+<div class="page" id="page-t21">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › Module 2 › Topic 2.1</div>
+  <div class="page-header"><div class="eyebrow">Topic 2.1</div><div class="page-title">Number</div><div class="page-meta">5 sessions</div></div>
+  <p style="font-size:14px;color:var(--text-mid);line-height:1.75;margin-bottom:1.25rem">This topic introduces you to exponents and estimating, including powers, roots, laws of indices, order of operations, and rounding.</p>
+  <div class="sl">Sessions</div>
+  <div class="session-grid">
+    <div class="sr" onclick="showPage('s211',null)"><span class="sn t1">2.1.1</span><span class="sr-title">Powers and roots</span>›</div>
+    <div class="sr" onclick="showPage('s212',null)"><span class="sn t1">2.1.2</span><span class="sr-title">Laws of indices</span>›</div>
+    <div class="sr" onclick="showPage('s213',null)"><span class="sn t1">2.1.3</span><span class="sr-title">Order of operations</span>›</div>
+    <div class="sr" onclick="showPage('s214',null)"><span class="sn t1">2.1.4</span><span class="sr-title">Rounding and estimating</span>›</div>
+    <div class="sr" onclick="showPage('s215',null)"><span class="sn t1">2.1.5</span><span class="sr-title">Practice questions</span>›</div>
+  </div>
+</div>
+
+<!-- S2.1.1 -->
+<div class="page" id="page-s211">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t21',null)">Topic 2.1</a> › 2.1.1</div>
+  <div class="page-header"><div class="eyebrow">Session 2.1.1</div><div class="page-title">Powers and roots</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://youtu.be/ZLlwb4syPx4" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Introduction to Powers/Indices &amp; 3 Basic Rules</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 17–22 in your coursebook. Make notes on any new concepts. Revise the key words on page 2.</p><p>Extended content is identified by a grey arrow and bar on the left-hand side of the page.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/150-lesson/squares-and-cubes" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Squares and Cubes</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/1729-lesson/higher-powers" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Higher Powers</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://app.mymaths.co.uk/6294-game/square-numbers-and-square-roots-pairs-activity-1" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Square Numbers and Square Roots Pairs Activity 1</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/6292-game/square-and-cube-numbers-pairs-activity-1" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Square and Cube Numbers Pairs Activity 1</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/6298-game/square-numbers-cube-numbers-and-roots-pairs-activity-1" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Square Numbers, Cube Numbers and Roots Pairs Activity 1</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- S2.1.2 -->
+<div class="page" id="page-s212">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t21',null)">Topic 2.1</a> › 2.1.2</div>
+  <div class="page-header"><div class="eyebrow">Session 2.1.2</div><div class="page-title">Laws of indices</div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://youtu.be/tHCM6qNdVSc" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">How to Multiply and Divide Numbers With Powers</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://youtu.be/83K4uW50HRU" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">How to Raise One Power to Another Power</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://youtu.be/DvNYkbafpIY" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">What to do when Powers are Fractions</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://youtu.be/70cAYYCJBuQ" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">How to use BODMAS</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 23–26 in your coursebook.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/153-lesson/indices-1" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Indices 1</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://app.mymaths.co.uk/6084-game/indices-linking-lines-activity" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Indices Linking Lines Activity</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- S2.1.3 -->
+<div class="page" id="page-s213">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t21',null)">Topic 2.1</a> › 2.1.3</div>
+  <div class="page-header"><div class="eyebrow">Session 2.1.3</div><div class="page-title">Order of operations</div></div>
+  <div class="note">⚠️ Be careful when referring to BIDMAS or BODMAS. Division does not come before multiplication, nor addition before subtraction. It is better to speak about the order of operations.</div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://youtu.be/70cAYYCJBuQ" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">How to use BODMAS</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 26–30 in your coursebook.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/203-lesson/order-of-operations" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Order of Operations</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://www.clickview.net/gb/primary/videos/88267695" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">European Mathematical Symbols</div><div class="rsrc">ClickView</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://www.mathsisfun.com/operation-order-bodmas.html" target="_blank"><div class="ri read">📖</div><div class="rb"><div class="rt read">Read</div><div class="rtitle">Order of Operations BODMAS</div><div class="rsrc">Maths is Fun</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://www.mathopolis.com/questions/q.html?id=295&t=mif&qs=295_1565_1571_296_1567_380_1569_3852_3853_382" target="_blank"><div class="ri complete">📄</div><div class="rb"><div class="rt complete">Complete</div><div class="rtitle">Order of Operations Questions</div><div class="rsrc">Mathopolis</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://tutorified-wp-bucket.s3-accelerate.amazonaws.com/2020/08/6.EE_.A.2-Order-of-Operations-%E2%80%93-Complex-Fractions.pdf" target="_blank"><div class="ri complete">📄</div><div class="rb"><div class="rt complete">Complete</div><div class="rtitle">Complex Fractions Exercise (challenging)</div><div class="rsrc">PDF</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- S2.1.4 -->
+<div class="page" id="page-s214">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t21',null)">Topic 2.1</a> › 2.1.4</div>
+  <div class="page-header"><div class="eyebrow">Session 2.1.4</div><div class="page-title">Rounding and estimating</div></div>
+  <div class="note">💡 In daily life, we estimate far more than we do exact calculations. Estimating is a life skill. To estimate, we round to 1 significant figure (1sf).</div>
+  <div class="starter"><div class="starter-icon">▶️</div><div><div class="starter-label">Starter</div><div class="starter-text">Watch these short videos for an introduction to this session:</div><a href="https://www.clickview.net/gb/primary/videos/88267549" target="_blank">WATCH – Rounding: Snails vs Rockets (ClickView) ↗</a><br><br><a href="https://www.clickview.net/gb/primary/videos/88267554" target="_blank">WATCH – Counting Crowds (ClickView) ↗</a></div></div>
+  <div class="sl">Tutorials</div>
+  <a class="rc" href="https://youtu.be/-X0amVzMKFo" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">How to Round Numbers to Significant Figures</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://www.youtube.com/watch?v=qRL_taeUAPw" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">How to Round Decimal Places</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://youtu.be/JTQ2Wh5E2js" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">How to Estimate in Maths</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 31–35 in your coursebook.</p></div>
+  <div class="sl">Practice</div>
+  <a class="rc" href="https://app.mymaths.co.uk/69-lesson/estimating-amounts" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Estimating Amounts</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/75-lesson/significant-figures" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Significant Figures</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/78-lesson/estimating-calculations-1" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Estimating Calculations 1</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://app.mymaths.co.uk/3271-lesson/estimating-calculations-2" target="_blank"><div class="ri explore">🔍</div><div class="rb"><div class="rt explore">Explore</div><div class="rtitle">Estimating Calculations 2</div><div class="rsrc">MyMaths</div></div><span class="ra">↗</span></a>
+  <div class="sl">Links</div>
+  <a class="rc" href="https://www.clickview.net/gb/primary/videos/88267554" target="_blank"><div class="ri complete">📄</div><div class="rb"><div class="rt complete">Complete</div><div class="rtitle">Estimating Worksheet (go to ClickView resource and click worksheet)</div><div class="rsrc">ClickView</div></div><span class="ra">↗</span></a>
+  <a class="rc" href="https://www.youtube.com/watch?v=CGdBFY5sB_4" target="_blank"><div class="ri watch">▶</div><div class="rb"><div class="rt watch">Watch</div><div class="rtitle">Significant Figures and Rounding</div><div class="rsrc">YouTube</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- S2.1.5 -->
+<div class="page" id="page-s215">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › <a onclick="showPage('t21',null)">Topic 2.1</a> › 2.1.5</div>
+  <div class="page-header"><div class="eyebrow">Session 2.1.5</div><div class="page-title">Practice questions</div></div>
+  <div class="sl">Interact</div>
+  <div class="ib"><p>Work through pages 36–37 in your coursebook. Use the Self-Assessment box at the bottom of page 37 to help you identify any gaps in your knowledge.</p><p>Remember: if the no-calculator symbol appears against a question, you must work without one.</p></div>
+  <div class="sl">Check answers</div>
+  <a class="rc" href="https://wolseyhalloxford.instructure.com/courses/2069945/pages/general-resources" target="_blank"><div class="ri read">📖</div><div class="rb"><div class="rt read">Check answers</div><div class="rtitle">General Resources (Canvas)</div><div class="rsrc">Wolsey Hall Oxford</div></div><span class="ra">↗</span></a>
+</div>
+
+<!-- T2.2 placeholder -->
+<div class="page" id="page-t22">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › Module 2 › Topic 2.2</div>
+  <div class="page-header"><div class="eyebrow">Topic 2.2</div><div class="page-title">Algebra</div></div>
+  <div class="note">📋 Sessions for this topic will be added as content is provided.</div>
+</div>
+
+<!-- T2.3 placeholder -->
+<div class="page" id="page-t23">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › Module 2 › Topic 2.3</div>
+  <div class="page-header"><div class="eyebrow">Topic 2.3</div><div class="page-title">Shape</div></div>
+  <div class="note">📋 Sessions for this topic will be added as content is provided.</div>
+</div>
+
+<!-- T2.4 placeholder -->
+<div class="page" id="page-t24">
+  <div class="bc"><a onclick="showPage('home',null)">Course</a> › Module 2 › Topic 2.4</div>
+  <div class="page-header"><div class="eyebrow">Topic 2.4</div><div class="page-title">Data</div></div>
+  <div class="note">📋 Sessions for this topic will be added as content is provided.</div>
+</div>
+
+</div>
+</main>
+</div>
+
+<script>
+function showPage(id, navEl) {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('active'); });
+  var page = document.getElementById('page-' + id);
+  if (page) page.classList.add('active');
+  if (navEl) navEl.classList.add('active');
+  document.querySelector('.main').scrollTo(0, 0);
+}
+
+function toggleTopic(header) {
+  header.classList.toggle('open');
+  header.nextElementSibling.classList.toggle('open');
+}
+
+function openTopic(index) {
+  var headers = document.querySelectorAll('.topic-header');
+  var lists = document.querySelectorAll('.session-list');
+  if (headers[index]) {
+    headers[index].classList.add('open');
+    lists[index].classList.add('open');
+  }
+}
+</script>
+</body>
+</html>
